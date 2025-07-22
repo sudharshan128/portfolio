@@ -1,24 +1,16 @@
-// Dark Mode Toggle
-document.getElementById('dark-mode-toggle').addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-});
-
-// Scroll to Top
-const scrollTopBtn = document.getElementById('scrollTopBtn');
-window.addEventListener('scroll', () => {
-  scrollTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-});
-scrollTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// Typing Animation
-const typingText = document.querySelector('.typing-text');
-const roles = ["AI & ML Engineer", "Full Stack Developer", "Data Scientist"];
-let index = 0;
-function typeRole() {
-  typingText.textContent = roles[index];
-  index = (index + 1) % roles.length;
+async function loadComponent(id, file) {
+  const response = await fetch(file);
+  const content = await response.text();
+  document.getElementById(id).innerHTML = content;
 }
-setInterval(typeRole, 3000);
-typeRole();
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadComponent("header", "components/header.html");
+  loadComponent("footer", "components/footer.html");
+  document.body.classList.add("page-loaded");
+  // Typing animation for main headline
+  const typing = document.querySelector('.typing');
+  if (typing) {
+    typing.textContent = typing.getAttribute('data-text');
+  }
+});
